@@ -1,16 +1,49 @@
 # CycleGAN — MRI ↔ CT Medical Image Translation
 
----
 
 ## Project Overview
 
-This project implements the CycleGAN Model Architecture and applies it to translate:
-- **Domain A = MRI scans** → **Domain B = CT scans** (and back)
+Medical imaging modalities such as MRI and CT provide complementary information about anatomical structures. This project explores **unpaired MRI-to-CT and CT-to-MRI image translation** using a CycleGAN-based deep learning framework.
 
-The key insight from the documentation:
-> *"CycleGANs address the limitation [of paired data] by using unpaired image data, making them extremely versatile"*
+The implementation investigates a frequency-aware, CBAM-augmented CycleGAN architecture with spectral-normalized discriminators to improve image translation between the two domains without requiring strictly paired training images.
 
-MRI↔CT is a perfect real-world application because **perfectly registered MRI-CT pairs of the same patient are nearly impossible to obtain** — exactly the problem CycleGAN was designed to solve.
+The framework is developed using PyTorch and includes model training, dataset preparation, image generation, and quantitative evaluation.
+
+## Key Technical Highlights
+
+- **Unpaired Image-to-Image Translation:** Uses CycleGAN to learn mappings between MRI and CT image domains without requiring paired training samples.
+- **Attention-Augmented Architecture:** Incorporates CBAM-based attention mechanisms into the CycleGAN framework.
+- **Spectral Normalization:** Uses spectral-normalized discriminators to support more stable adversarial training.
+- **Cycle Consistency:** Employs cycle-consistency and identity losses to preserve important image characteristics.
+- **Model Evaluation:** Evaluates generated images using MAE, PSNR, SSIM, and FID.
+- **Training Optimization:** Incorporates computational optimization techniques, including PyTorch Automatic Mixed Precision (AMP).
+
+## Experimental Results
+
+The following metrics are reported in the project report, comparing the baseline CycleGAN with the proposed Med-CycleGAN implementation.
+
+| Evaluation Metric | Baseline CycleGAN | Med-CycleGAN |
+|:---|---:|---:|
+| PSNR (↑) | 27.4 | **29.5** |
+| SSIM (↑) | 0.731 | **0.781** |
+| FID (↓) | 85.2 | **62.4** |
+| MAE (↓) | 0.058 | **0.041** |
+
+*Note: These values are taken from the project report and have not been independently reproduced.*
+
+## Technology Stack
+
+- **Programming Language:** Python
+- **Deep Learning:** PyTorch
+- **Computer Vision:** Torchvision, Pillow
+- **Numerical Computing:** NumPy
+- **Medical Image Handling:** pydicom (optional DICOM support)
+- **Development Environment:** Google Colab / Jupyter Notebook
+
+## Project Documentation
+
+- [Detailed Project Report](docs/Project_Report.pdf)
+- [Project Presentation](docs/Project_Presentation.pdf)
 
 ---
 
@@ -92,3 +125,4 @@ cyclegan_mri_ct/
 ![Generated CT](assets/paired_generated_ct.png)
 
 ---
+*Original paper: Zhu et al., "Unpaired Image-to-Image Translation using Cycle-Consistent Adversarial Networks", ICCV 2017*
