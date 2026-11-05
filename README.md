@@ -4,7 +4,7 @@
 
 ## Project Overview
 
-This project implements the CycleGAN architecture (from your documentation) and applies it to translate:
+This project implements the CycleGAN Model Architecture and applies it to translate:
 - **Domain A = MRI scans** → **Domain B = CT scans** (and back)
 
 The key insight from the documentation:
@@ -14,7 +14,7 @@ MRI↔CT is a perfect real-world application because **perfectly registered MRI-
 
 ---
 
-## Architecture (from your documentation)
+### Model Architecture
 
 ### Generator: ResNet-based
 ```
@@ -34,7 +34,7 @@ C64 → C128 → C256 → C512 → Conv(1)
 - No InstanceNorm on C64 (first layer)
 - Output: probability map (each patch = real or fake)
 
-### Loss Functions (from documentation)
+### Training Objectives and Loss Functions
 ```
 L_total = L_GAN(G, Dy) + L_GAN(F, Dx) + λ·L_cyc(G,F) + 0.5λ·L_identity(G,F)
 ```
@@ -46,7 +46,7 @@ L_total = L_GAN(G, Dy) + L_GAN(F, Dx) + λ·L_cyc(G,F) + 0.5λ·L_identity(G,F)
 
 ## Project Structure
 
-```
+```text
 cyclegan_mri_ct/
 │
 ├── train.py          ← Main training script
@@ -58,26 +58,37 @@ cyclegan_mri_ct/
 ├── utils.py          ← ReplayBuffer, LR scheduler, checkpoints
 ├── requirements.txt  ← Python dependencies
 │
-├── data/             
+├── data/
 │   ├── trainA/       ← MRI training images
-│   ├── trainB/       ← CT  training images
+│   ├── trainB/       ← CT training images
 │   ├── testA/        ← MRI test images
-│   └── testB/        ← CT  test images
+│   └── testB/        ← CT test images
 │
 ├── checkpoints/      ← Saved model checkpoints
 └── outputs/          ← Generated images & test results
     └── samples/      ← Training samples saved every N epochs
+```
 
+## Kaggle Datasets
 
-**Kaggle datasets:**
 | Dataset | Link | Domain |
 |---------|------|--------|
-| Brain MRI | kaggle.com/datasets/masoudnickparvar/brain-tumor-mri-dataset | MRI (trainA) |
-| RSNA CT Scans | kaggle.com/datasets/kmader/siim-medical-images | CT (trainB) |
-| MRI+CT combined | kaggle.com/datasets/arjunbasandrai/medical-imaging-datasets | Both |
+| Brain MRI | [Brain MRI Dataset](https://www.kaggle.com/datasets/masoudnickparvar/brain-tumor-mri-dataset) | MRI (trainA) |
+| RSNA CT Scans | [SIIM Medical Images](https://www.kaggle.com/datasets/kmader/siim-medical-images) | CT (trainB) |
+| MRI+CT Combined | [Medical Imaging Datasets](https://www.kaggle.com/datasets/arjunbasandrai/medical-imaging-datasets) | Both |
 
+## Individual Translation Examples
 
+**Input MRI**
+
+![Input MRI](assets/paired_input_mri.png)
+
+**Ground Truth CT**
+
+![Ground Truth CT](assets/paired_ground_truth_ct.png)
+
+**Generated CT**
+
+![Generated CT](assets/paired_generated_ct.png)
 
 ---
-
-*Original paper: Zhu et al., "Unpaired Image-to-Image Translation using Cycle-Consistent Adversarial Networks", ICCV 2017*
